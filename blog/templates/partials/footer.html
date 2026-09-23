@@ -1,0 +1,116 @@
+{% load static %}
+{% load blog_tags %}
+<footer class="pb-0">
+	<div class="container">
+		<hr>
+		<!-- Widgets START -->
+		<div class="row pt-5">
+			<!-- Footer Widget -->
+			<div class="col-md-6 col-lg-4 mb-4">
+				<img class="light-mode-item" style="width: 60px; height: 60px" src="{% static 'images/icon/blog-logo.png' %}" alt="logo">
+				<img class="dark-mode-item" style="width: 60px; height: 60px" src="{% static 'images/icon/blog-logo.png' %}" alt="logo">
+				<p class="mt-3"></p>
+				<div class="mt-4">
+				</div>
+			</div>
+
+			<!-- Footer Widget -->
+			<div class="col-md-6 col-lg-3 mb-4">
+				<h5 class="mb-4">لینک های مفید</h5>
+				<div class="row">
+					<div class="col-6">
+						<ul class="nav flex-column">
+							<li class="nav-item"><a class="nav-link pt-0" href="{% url 'blog:post_list' %}">لیست مطالب</a></li>
+
+							<li class="nav-item"><a class="nav-link" href="{% url 'blog:ticket' %}">ارسال تیکت</a></li>
+
+						</ul>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- Footer Widget -->
+			<div class="col-sm-6 col-lg-3 mb-4">
+				<h5 class="mb-4">پربیننده ترین</h5>
+				<ul class="list-inline">
+					<li class="list-inline-item"><a href="{% url 'blog:post_list_category' 'اخبار تکنولوژی' %}" class="btn btn-sm btn-primary-soft">اخبار تکنولوژی</a></li>
+					<li class="list-inline-item"><a href="{% url 'blog:post_list_category' 'هوش مصنوعی' %}" class="btn btn-sm btn-success-soft">هوش مصنوعی</a></li>
+					<li class="list-inline-item"><a href="{% url 'blog:post_list_category' 'نئولرنینگ' %}#" class="btn btn-sm btn-warning-soft">نئولرنینگ</a></li>
+					<li class="list-inline-item"><a href="{% url 'blog:post_list_category' 'دورنگاه' %}" class="btn btn-sm btn-danger-soft">دورنگاه</a></li>
+					<li class="list-inline-item"><a href="{% url 'blog:post_list_category' 'مقاله های علمی' %}" class="btn btn-sm btn-info-soft">مقاله های علمی</a></li>
+				</ul>
+			</div>
+
+			<!-- Footer Widget -->
+			<div class="col-sm-6 col-lg-2 mb-4">
+				<h5 class="mb-4">ارتباط با ما</h5>
+				<ul class="nav flex-column">
+
+                        <li class="nav-item">
+                            <a class="nav-link pt-0" href="https://www.instagram.com/realneotech?igsh=cTJ3NXR4YzZ0dWw3" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-instagram fa-fw me-2 text-instagram"></i>
+                                اینستاگرام
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://t.me/realneotech" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-telegram fa-fw me-2" style="color: #229ED9;"></i>
+                                تلگرام
+                            </a>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="intent://www.youtube.com/channel/UC0AF0mmQFs0_xmlVjNeVfng#Intent;package=com.google.android.youtube;scheme=https;end" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube-square fa-fw me-2 text-youtube"></i>یوتیوب</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://www.aparat.com/realneotech?utm_source=qr_code" target="_blank" rel="noopener noreferrer">
+                                <svg class="fa-fw me-2"
+                                     style="width: 1.3em; height: 1em; vertical-align: -0.125em;"
+                                     viewBox="0 0 24 24"
+                                     role="img"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="currentColor"
+                                          d="M12.001 1.594c-9.27-.003-13.913 11.203-7.36 17.758a10.403 10.403 0 0 0 17.76-7.355c0-5.744-4.655-10.401-10.4-10.403zM6.11 6.783c.501-2.598 3.893-3.294 5.376-1.103 1.483 2.19-.422 5.082-3.02 4.582A2.97 2.97 0 0 1 6.11 6.783zm4.322 8.988c-.504 2.597-3.897 3.288-5.377 1.096-1.48-2.192.427-5.08 3.025-4.579a2.97 2.97 0 0 1 2.352 3.483zm1.26-2.405c-1.152-.223-1.462-1.727-.491-2.387.97-.66 2.256.18 2.04 1.334a1.32 1.32 0 0 1-1.548 1.053zm6.198 3.838c-.501 2.598-3.893 3.293-5.376 1.103-1.484-2.191.421-5.082 3.02-4.583a2.97 2.97 0 0 1 2.356 3.48zm-1.967-5.502c-2.598-.501-3.293-3.896-1.102-5.38 2.19-1.483 5.081.422 4.582 3.02a2.97 2.97 0 0 1-3.48 2.36zM13.59 23.264l2.264.61a3.715 3.715 0 0 0 4.543-2.636l.64-2.402a11.383 11.383 0 0 1-7.448 4.428zm7.643-19.665L18.87 2.97a11.376 11.376 0 0 1 4.354 7.62l.65-2.459A3.715 3.715 0 0 0 21.231 3.6zM.672 13.809l-.541 2.04a3.715 3.715 0 0 0 2.636 4.543l2.107.562a11.38 11.38 0 0 1-4.203-7.145zM10.357.702 8.15.126a3.715 3.715 0 0 0-4.547 2.637l-.551 2.082A11.376 11.376 0 0 1 10.358.702z"/>
+                                </svg>
+                                آپارات
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://soundcloud.com/realneotech" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-soundcloud fa-fw me-2 text-soundcloud"></i>
+                                ساندکلاود
+                            </a>
+                        </li>
+
+
+				</ul>
+			</div>
+		</div>
+		<!-- Widgets END -->
+
+		<!-- Footer bottom START -->
+		<div class="row">
+			<div class="col-12">
+				<hr class="mt-4 mb-3">
+			</div>
+		</div>
+		<div class="row align-items-center text-center text-md-end pb-4">
+			<div class="col-md-6 mb-2 mb-md-0">
+				<p class="mb-0 small">
+					© <span dir="ltr">{% current_jalali_year %}</span>
+					<a href="{% url 'blog:index' %}" class="text-reset btn-link">نئوتک</a>
+					— تمامی حقوق مادی و معنوی این وب‌سایت محفوظ است.
+				</p>
+			</div>
+			<div class="col-md-6 text-center text-md-start">
+				<p class="mb-0 small">
+					طراحی و توسعه توسط
+					  <a href="https://github.com/alimmdsrn" target="_blank" rel="noopener noreferrer" class="fw-bold text-reset btn-link">علی‌محمد سرخانیان</a>
+				</p>
+			</div>
+		</div>
+		<!-- Footer bottom END -->
+	</div>
+</footer>
