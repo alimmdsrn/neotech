@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
     "django_jalali",
 ]
 
@@ -186,3 +188,6 @@ LOGGING = {
         "django": {"handlers": ["console", "file"], "level": "ERROR"},
     },
 }
+
+# django.contrib.sites - used by the sitemap to build absolute URLs
+SITE_ID = 1

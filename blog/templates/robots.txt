@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /blog/profile/
+Disallow: /blog/login/
+Disallow: /blog/register/
+
+Sitemap: https://realneotech.ir/sitemap.xml
