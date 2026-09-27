@@ -186,6 +186,8 @@ LOGGING = {
     },
     "loggers": {
         "django": {"handlers": ["console", "file"], "level": "ERROR"},
+        # Bots hitting mail.realneotech.ir are correctly rejected; don't log them
+        "django.security.DisallowedHost": {"handlers": [], "propagate": False},
     },
 }
 

@@ -35,7 +35,6 @@ def post_list(request, category=None):
         posts = paginator.page(paginator.num_pages)
     except PageNotAnInteger:
         posts = paginator.page(1)
-    print(posts, type(posts))
     context = {
         'posts': posts,
         'category': category
