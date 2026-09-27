@@ -1,78 +1,52 @@
-
 {% extends 'parent/base.html' %}
-{% block title %}profile{% endblock %}
+{% load static %}
+
+{% block title %}{% if post %}ویرایش مطلب{% else %}ایجاد مطلب{% endif %}{% endblock %}
+
 {% block content %}
-
-<section class="py-4">
-	<div class="container">
-    <div class="row pb-4">
-			<div class="col-12">
-        <!-- Title -->
-        <h1 class="mb-0 h3">ایجاد یا ویرایش پست</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-				<!-- Chart START -->
-				<div class="card border h-100">
-					<!-- Card body -->
-					<div class="card-body">
-            <!-- Form START -->
-
-<form method="post" enctype="multipart/form-data">
-<div class="row">
-    <div class="col-12">
-    {% csrf_token %}
-
-	{{ form.as_p }}
-    {% if post %}
-        {% for img in post.images.all %}
-        <div class="row align-items-center mb-2">
-          <div class="col-4 col-md-2">
-                <div class="position-relative">
-                  <img class="rounded mb-3" src="{{ img.image_file.url }}" alt="">
-                      <div class="position-absolute top-0 end-0 mt-n2 me-n2">
-                        <a class="btn btn-icon btn-xs btn-danger" href="{% url 'blog:delete_image' img.id %}"><i class="bi bi-x"></i></a>
-                      </div>
+<section>
+    <div class="container" style="max-width:860px">
+        <div class="section-head">
+            <div>
+                <span class="eyebrow">داشبورد نویسنده</span>
+                <h2>{% if post %}ویرایش مطلب{% else %}ایجاد مطلب جدید{% endif %}</h2>
             </div>
-          </div>
-        {% endfor %}
-    {% endif %}
-    </div>
-</div>
-<button class="btn btn-primary" type="submit">ذخیره</button>
-</div>
-</form>
-
-                    <!-- Form END -->
+            <a class="more" href="{% url 'blog:profile' %}">بازگشت به داشبورد ←</a>
         </div>
-    </div><!-- Chart END -->
-</div>
+
+        {% if form.errors %}
+        <div class="alert alert-error" style="margin-bottom:18px">لطفاً خطاهای زیر را اصلاح کنید.</div>
+        {% endif %}
+
+        <div class="form-card">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <span class="help">در متن مطلب می‌توانی از Markdown استفاده کنی: **پررنگ**، ## تیتر و [متن](لینک).</span>
+
+                {% if post %}
+                    {% if post.images.all %}
+                    <div class="divider"></div>
+                    <h3>تصاویر فعلی</h3>
+                    <div class="grid grid-3">
+                        {% for img in post.images.all %}
+                        <div class="card">
+                            <div class="card-media"><img src="{{ img.image_file.url }}" alt=""></div>
+                            <div class="card-body">
+                                <a class="btn btn-ghost btn-sm" href="{% url 'blog:delete_image' img.id %}">حذف تصویر</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endif %}
+
+                <div class="form-actions" style="margin-top:20px">
+                    <button class="btn btn-primary" type="submit">{% if post %}ذخیره‌ی تغییرات{% else %}ذخیره‌ی مطلب{% endif %}</button>
+                    <a class="btn btn-ghost" href="{% url 'blog:profile' %}">انصراف</a>
+                </div>
+            </form>
+        </div>
     </div>
-	</div>
 </section>
-
-
-
-    <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Vendors -->
-<script src="assets/vendor/apexcharts/js/apexcharts.min.js"></script>
-<script src="assets/vendor/quill/js/quill.min.js"></script>
-
-<!-- Template Functions -->
-<script src="assets/js/functions.js"></script>
-<!-- Btn Upload -->
-<script>
-   document.querySelector(".upload-button").addEventListener("click", () => {
-	  //clicks on the file input
-	  document.querySelector(".hidden-upload").click();
-	});
-	//adds event listener on the hidden file input to listen for any changes
-	document.querySelector(".hidden-upload").addEventListener("change", (event) => {
-	  //gets the file name
-	  document.querySelector(".upload-name").value = event.target.files[0].name;
-	});
-</script>
-
 {% endblock %}

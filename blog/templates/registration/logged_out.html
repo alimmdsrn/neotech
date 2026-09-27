@@ -1,12 +1,19 @@
 {% extends 'parent/base.html' %}
-{% block title %}logout{% endblock %}
+{% load static %}
+
+{% block title %}خروج{% endblock %}
 
 {% block content %}
-    {% csrf_token %}
-    
-          <div class="centered mb-4 text-center">
-        <h2 class="h1 m-0">خارج شدید</h2>
-          <br>
-      <a href="{% url 'blog:login' %}" class="btn btn-dark mb-0">ورود مجدد</a>
-      </div>
+<section>
+    <div class="container auth-wrap">
+        <div class="form-card" style="text-align:center">
+            <h2 style="margin:0 0 10px;font-size:21px">از حساب خارج شدی</h2>
+            <p style="color:var(--muted);margin:0 0 22px">هر وقت خواستی دوباره وارد شو.</p>
+            <div class="form-actions" style="justify-content:center">
+                <a class="btn btn-primary" href="{% url 'blog:index' %}">صفحه‌ی اصلی</a>
+                <a class="btn btn-ghost" href="{% url 'blog:login' %}">ورود دوباره</a>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

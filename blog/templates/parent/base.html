@@ -1,83 +1,121 @@
-
-
-{% load static %}
-<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html lang="fa-ir" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>blog | {% block title %}{% endblock %}</title>
-	<meta name="google-site-verification" content="GDxlGXyPDdFsBmeSJNyqy8ZKy2BckV2afoauuLhL3Lg" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'vendor/font-awesome/css/all.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" type="text/css" href="{% static 'vendor/glightbox/css/glightbox.css' %}">
-    <link rel="shortcut icon" href="{% static 'images/icon/blog-logo.png' %}">
-  	<script>
-		const storedTheme = localStorage.getItem('theme')
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}نئوتک{% endblock %} | نئوتک</title>
+    <meta name="description" content="{% block description %}نئوتک، نشریه دانشجویی کامپیوتر و فناوری.{% endblock %}">
 
-		const getPreferredTheme = () => {
-			if (storedTheme) {
-				return storedTheme
-			}
-			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-		}
+    <link rel="icon" href="{% static 'images/icon/favicon.ico' %}" sizes="any">
+    <link rel="icon" type="image/png" sizes="48x48" href="{% static 'images/icon/favicon-48.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'images/icon/favicon-96.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'images/icon/favicon-192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/icon/favicon-192.png' %}">
 
-		const setTheme = function (theme) {
-			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-				document.documentElement.setAttribute('data-bs-theme', 'dark')
-			} else {
-				document.documentElement.setAttribute('data-bs-theme', theme)
-			}
-		}
+    <!-- set the theme before paint so the page never flashes -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
 
-		setTheme(getPreferredTheme())
-
-		window.addEventListener('DOMContentLoaded', () => {
-		    var el = document.querySelector('.theme-icon-active');
-			if(el != 'undefined' && el != null) {
-				const showActiveTheme = theme => {
-				const activeThemeIcon = document.querySelector('.theme-icon-active use')
-				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
-
-				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-					element.classList.remove('active')
-				})
-
-				btnToActive.classList.add('active')
-				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-			}
-
-			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-				if (storedTheme !== 'light' || storedTheme !== 'dark') {
-					setTheme(getPreferredTheme())
-				}
-			})
-
-			showActiveTheme(getPreferredTheme())
-
-			document.querySelectorAll('[data-bs-theme-value]')
-				.forEach(toggle => {
-					toggle.addEventListener('click', () => {
-						const theme = toggle.getAttribute('data-bs-theme-value')
-						localStorage.setItem('theme', theme)
-						setTheme(theme)
-						showActiveTheme(theme)
-					})
-				})
-
-			}
-		})
-
-	</script>
-    {% block head %} {% endblock %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    {% block head %}{% endblock %}
 </head>
 <body>
+<a class="skip-link" href="#main">رفتن به محتوا</a>
+
 {% include 'partials/header.html' %}
-{% include 'partials/navigation.html' %}
-{% block content %} {% endblock %}
+
+<main id="main">
+    {% if messages %}
+    <div class="container">
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags|default:'info' }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
 {% include 'partials/footer.html' %}
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* theme ------------------------------------------------------------- */
+  var sun  = "M12 4V2m0 20v-2m8-8h2M2 12h2m13.7-5.7 1.4-1.4M4.9 19.1l1.4-1.4m0-11.4L4.9 4.9m14.2 14.2-1.4-1.4M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z";
+  var moon = "M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z";
+  var icon = document.getElementById('themeIcon');
+  function paintIcon() {
+    if (!icon) return;
+    icon.innerHTML = '<path d="' + (root.getAttribute('data-theme') === 'dark' ? sun : moon) + '"/>';
+  }
+  paintIcon();
+  var themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      paintIcon();
+    });
+  }
+
+  /* search panel ------------------------------------------------------ */
+  var searchBtn = document.getElementById('searchToggle');
+  var panel = document.getElementById('searchPanel');
+  if (searchBtn && panel) {
+    searchBtn.addEventListener('click', function () {
+      panel.classList.toggle('open');
+      var input = panel.querySelector('input');
+      if (panel.classList.contains('open') && input) input.focus();
+    });
+  }
+
+  /* user dropdown ----------------------------------------------------- */
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('details.user-menu[open]').forEach(function (d) {
+      if (!d.contains(e.target)) d.removeAttribute('open');
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('details.user-menu[open]').forEach(function (d) {
+        d.removeAttribute('open');
+      });
+    }
+  });
+
+  /* mobile drawer ----------------------------------------------------- */
+  var drawer = document.getElementById('drawer');
+  var menuBtn = document.getElementById('menuBtn');
+  var closeBtn = document.getElementById('drawerClose');
+  if (drawer && menuBtn) {
+    menuBtn.addEventListener('click', function () { drawer.classList.add('open'); });
+    if (closeBtn) closeBtn.addEventListener('click', function () { drawer.classList.remove('open'); });
+    drawer.addEventListener('click', function (e) {
+      if (e.target === drawer) drawer.classList.remove('open');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') drawer.classList.remove('open');
+    });
+  }
+})();
+</script>
+{% block scripts %}{% endblock %}
 </body>
 </html>

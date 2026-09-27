@@ -1,38 +1,26 @@
-{#{% extends 'parent/base.html' %}#}
-{#{% block title %}post delete{% endblock %}#}
-{#{% block content %}#}
-{#    <h2>Are you sure to Delete "{{ post.title }}"?</h2>#}
-{#    <a href="{% url 'blog:profile' %}">return to previous page</a>#}
-{#    <br>#}
-{#    <form method="post">#}
-{#    {% csrf_token %}#}
-{#    <input type="submit" value="Delete">#}
-{#    </form>#}
-{#{% endblock %}#}
-{##}
-
-
-
-
-
-
-{#----------------------------------------------------------------------#}
 {% extends 'parent/base.html' %}
-{% load jformat %}
-{% block title %}post delete{% endblock %}
+{% load static %}
+
+{% block title %}حذف مطلب{% endblock %}
 
 {% block content %}
-      <div class="centered mb-4 text-center">
-    <h2 class="h1 m-0"> آیا از حذف پست ({{ post.title }})  مطمعن هستید؟ </h2>
-      <br>
-  		<a href="{% url 'blog:profile' %}" class="btn btn-dark mb-0"> برگشت به صفحه پروفایل</a>
-  </div>
-    <br>
-    <form method="post">
-        {% csrf_token %}
-        <div class="centered mb-4 text-center">
-        <button class="btn btn-primary center" type="submit">حذف</button>
+<section>
+    <div class="container" style="max-width:620px">
+        <div class="form-card" style="text-align:center">
+            <h2 style="margin:0 0 10px;font-size:21px">حذف مطلب</h2>
+            <p style="color:var(--muted);margin:0 0 6px">آیا از حذف این مطلب مطمئنی؟</p>
+            <p style="font-weight:600;margin:0 0 22px">«{{ post.title }}»</p>
+            <div class="alert alert-warning" style="text-align:start;margin-bottom:22px">
+                با حذف مطلب، تصاویر و دیدگاه‌های آن هم حذف می‌شوند و قابل بازگشت نیستند.
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-actions" style="justify-content:center">
+                    <button class="btn btn-danger" type="submit">بله، حذف کن</button>
+                    <a class="btn btn-ghost" href="{% url 'blog:profile' %}">انصراف</a>
+                </div>
+            </form>
         </div>
-
-    </form>
+    </div>
+</section>
 {% endblock %}

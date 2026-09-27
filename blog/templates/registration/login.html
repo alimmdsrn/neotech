@@ -1,47 +1,28 @@
 {% extends 'parent/base.html' %}
-{% block title %}login{% endblock %}
+{% load static %}
 
-
+{% block title %}ورود{% endblock %}
 
 {% block content %}
-{% if messages %}
-    {% for message in messages %}
-        <div class="container mt-3">
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    {% endfor %}
-{% endif %}
-    <section class="py-4">
-	<div class="container">
-    <div class="row pb-4">
-			<div class="col-12">
-        <!-- Title -->
-        <h1 class="mb-0 h3">ورود</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-				<!-- Chart START -->
-				<div class="card border h-100">
-					<!-- Card body -->
-					<div class="card-body">
-            <!-- Form START -->
-    <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-        <input type="hidden" name="next", value="{{ next }}">
-     <button class="btn btn-primary" type="submit">ورود</button>
-    </form>
+<section>
+    <div class="container auth-wrap">
+        <div class="form-card">
+            <h2 style="margin:0 0 6px;font-size:21px">ورود به حساب</h2>
+            <p style="margin:0 0 20px;color:var(--muted);font-size:14.5px">برای مدیریت مطالب وارد شو.</p>
 
+            {% if form.errors %}
+            <div class="alert alert-error" style="margin-bottom:18px">نام کاربری یا رمز عبور درست نیست.</div>
+            {% endif %}
 
-                        <!-- Form END -->
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="hidden" name="next" value="{{ next }}">
+                <div class="form-actions">
+                    <button class="btn btn-primary btn-block" type="submit">ورود</button>
+                </div>
+            </form>
         </div>
-    </div><!-- Chart END -->
-</div>
     </div>
-	</div>
 </section>
 {% endblock %}

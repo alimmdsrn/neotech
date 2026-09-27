@@ -1,37 +1,49 @@
-
 {% extends 'parent/base.html' %}
-{% block title %}post search{% endblock %}
 {% load static %}
 {% load blog_tags %}
+
+{% block title %}جستجو{% endblock %}
+{% block description %}جستجو در مطالب نشریه نئوتک.{% endblock %}
+
 {% block content %}
-    {% if query %}
-      <div class="mb-4 text-center">
-        <h2 class="h1 m-0"> نتایج جستجو برای عبارت : "{{ query }}"</h2>
-      </div>
-    {% endif %}
-    <br>
-{% for post in results %}
-<div class="container" data-sticky-container>
-    <div class="card mb-4">
-        <div class="row">
-            <div class="col-md-7 mt-3 mt-md-0">
-                <h4><a href="{{post.get_absolute_url}}" class="btn-link stretched-link text-reset"><i class="fas fa-circle me-2 small fw-bold"></i>{{ post.title}}</a></h4>
-                <div class="post-excerpt">{{ post.description|markdown|truncatechars_html:20 }}</div>
+<section>
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <span class="eyebrow">جستجو</span>
+                {% if query %}
+                <h2>نتایج برای «{{ query }}»</h2>
+                <p>{{ results|length }} مطلب پیدا شد</p>
+                {% else %}
+                <h2>جستجو در مطالب</h2>
+                <p>عبارتی بنویس تا در عنوان و متن مطالب بگردیم.</p>
+                {% endif %}
             </div>
         </div>
-    </div>
-</div>
-    {% empty %}
-        <div class="mb-4 text-center">
-            <h4 class="h4 m-0">هیچ نتیجه ای یافت نشد</h4>
+
+        <form class="form-card" method="get" action="{% url 'blog:post_search' %}"
+              style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
+            <input type="search" name="query" value="{{ query|default:'' }}"
+                   placeholder="دنبال چه مطلبی می‌گردی؟" aria-label="عبارت جستجو" required
+                   style="flex:1;min-width:220px">
+            <button class="btn btn-primary" type="submit">جستجو</button>
+        </form>
+
+        {% if results %}
+        <div class="grid grid-3">
+            {% for post in results %}
+                {% include 'partials/post-card.html' with post=post %}
+            {% endfor %}
         </div>
-
-{% endfor %}
-
-    <!-- Bootstrap JS -->
-<script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-
-<!-- Template Functions -->
-<script src="{% static 'js/functions.js' %}"></script>
-
+        {% elif query %}
+        <div class="panel">
+            <div class="empty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <p style="margin:0 0 16px">هیچ مطلبی با این عبارت پیدا نشد. عبارت دیگری را امتحان کن یا سری به آرشیو بزن.</p>
+                <a class="btn btn-ghost btn-sm" href="{% url 'blog:post_list' %}">مشاهده‌ی همه‌ی مطالب</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

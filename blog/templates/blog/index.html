@@ -1,124 +1,100 @@
-
 {% extends 'parent/base.html' %}
-{% block title %}post list{% endblock %}
 {% load static %}
 {% load blog_tags %}
 {% load jformat %}
-{% block head %} {% endblock %}
 
-
-
-
+{% block title %}خانه{% endblock %}
+{% block description %}نئوتک، نشریه دانشجویی کامپیوتر و فناوری: مقاله، مصاحبه و پادکست.{% endblock %}
 
 {% block content %}
 
-{% if messages %}
-    {% for message in messages %}
-        <div class="container mt-3">
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<!-- ============================================================ hero -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div>
+            <span class="eyebrow">نشریه دانشجویی نئوتک</span>
+            <h1>فناوری را ساده، دقیق و از نگاه دانشجویی روایت می‌کنیم.</h1>
+            <p class="lead">
+                نئوتک نشریه‌ای دانشجویی درباره‌ی کامپیوتر، هوش مصنوعی و آینده‌ی فناوری است.
+                هر شماره، یک ایده؛ هر مطلب، یک نگاه تازه.
+            </p>
+            <div class="form-actions">
+                <a class="btn btn-primary" href="{% url 'blog:post_list' %}">خواندن مطالب</a>
+            </div>
+
+            <div class="stats">
+                <div class="stat"><b>{% total_posts %}</b><span>مطلب منتشرشده</span></div>
+                <div class="stat"><b>{% total_categories %}</b><span>دسته‌بندی</span></div>
+                <div class="stat"><b>{% total_comments %}</b><span>دیدگاه</span></div>
+                <div class="stat"><b>{% total_authors %}</b><span>نویسنده</span></div>
             </div>
         </div>
-    {% endfor %}
-{% endif %}
 
-<!-- Preloader START -->
-	<div class="preloader">
-		<div class="loader">
-			<div class="sh1"></div>
-			<div class="sh2"></div>
-		</div>
-	</div>
-<!-- Preloader END -->
-
-<!-- **************** MAIN CONTENT START **************** -->
-<main>
-
-<!-- =======================
-Main hero START -->
-<section class="py-2 h-400 overflow-hidden position-relative hero-cover" style="background-image: url({% static 'images/cover/cv1.png' %}); background-position: center center; background-repeat: no-repeat; background-size: cover;"> <div class="container-fluid h-100 p-0"> <div class="row align-items-center h-100 text-center"> <div class="col-12"> <!-- Hero title --> </div> </div> </div> </section>    <!-- =======================
-Main hero END -->
-
-<!-- =======================
-Latest articles START -->
-<section class="py-5">
-	<div class="container-fluid px-sm-5">
-		<div class="row">
-			<!-- Title -->
-      <div class="mb-4 text-center">
-        <h2 class="h1 m-0">آخرین مطالب</h2>
-      </div>
-		</div>
-    <div class="row g-3 g-sm-5">
-		{% latest_posts 3 %}
-      <!-- Card item END -->
+        <a class="hero-media" href="{% url 'blog:post_list' %}">
+            <img src="{% static 'images/cover/cv1.png' %}" alt="نئوتک">
+        </a>
     </div>
-        <a href="{% url 'blog:post_list' %}" class="btn btn-dark mb-0">مشاهده همه</a>
-  </div>
 </section>
 
-
-<!-- =======================
-Latest articles END -->
-
-
-<!-- =======================
-Last week highlights START -->
-<section class="py-5">
-	<div class="container-fluid px-sm-5">
-		<div class="row">
-			<!-- Title -->
-      <div class="mb-4 text-center">
-        <h2 class="h1 m-0">محبوب ترین مطالب</h2>
-      </div>
-		</div>
-    <div class="row g-4 g-sm-5">
-    {% most_popular_posts 3 as pop_posts %}
-    {% for post in pop_posts %}
-      <div class="col-sm-6 col-lg-4">
-        <!-- Card item START -->
-        <div class="card">
-          <!-- Card img -->
-          <div class="position-relative">
-            <img class="card-img rounded-0 post-cover" src="{{ post.images.first.image_file.url }}" alt="Card image">
-            <div class="card-img-overlay d-flex align-items-start flex-column p-3">
-              <!-- Card overlay bottom -->
-              <div class="w-100 mt-auto">
-                <a href="#" class="badge text-bg-dark mb-2">{{ post.category }}</a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body px-0 pt-3">
-            <h4 class="card-title"><a href="{{ post.get_absolute_url }} " class="btn-link text-reset stretched-link">{{ post.title }}</a></h4>
-            <div class="post-excerpt">{{ post.description|markdown|truncatechars_html:50 }}</div>
-            <!-- Card info -->
-            <ul class="nav nav-divider align-items-center">
-              <li class="nav-item">{{ post.publish|jformat:"%Y/%m/%d-%H:%M" }}</li>
-            </ul>
-          </div>
+<!-- ====================================================== categories -->
+<section class="tight">
+    <div class="container">
+        <div class="chips">
+            <a class="chip active" href="{% url 'blog:post_list' %}">همه</a>
+            {% category_list as categories %}
+            {% for cat in categories %}
+            <a class="chip" href="{% url 'blog:post_list_category' cat %}">{{ cat }}</a>
+            {% endfor %}
         </div>
-      </div>
-        {% endfor %}
-      <!-- Card item END -->
     </div>
-  </div>
 </section>
-<!-- =======================
-Last week highlights END -->
 
-</main>
-<!-- **************** MAIN CONTENT END **************** -->
+<!-- ========================================================== latest -->
+<section>
+    <div class="container">
+        <div class="section-head">
+            <div>
+                <h2>آخرین مطالب</h2>
+                <p>تازه‌ترین نوشته‌های نئوتک</p>
+            </div>
+            <a class="more" href="{% url 'blog:post_list' %}">مشاهده‌ی همه ←</a>
+        </div>
+        <div class="grid grid-3">
+            {% latest_posts 3 %}
+        </div>
+    </div>
+</section>
 
-<!-- Back to top -->
-<div class="back-top"><i class="bi bi-arrow-up-short"></i></div>
-<!-- =======================
-JS libraries, plugins and custom scripts -->
+<!-- ================================================ popular + about -->
+<section class="tight">
+    <div class="container">
+        <div class="grid grid-2" style="align-items:start">
+            <div class="panel">
+                <div class="panel-head">
+                    <h3>محبوب‌ترین‌ها</h3>
+                    <span class="tag neutral">بر اساس دیدگاه</span>
+                </div>
+                <div class="panel-body" style="padding-block:6px">
+                    <div class="rank-list">
+                        {% most_popular_posts 4 as popular_posts %}
+                        {% for post in popular_posts %}
+                        <a class="rank" href="{{ post.get_absolute_url }}">
+                            <b>{{ forloop.counter }}</b>
+                            <span>
+                                <span class="t">{{ post.title }}</span><br>
+                                <span class="m">{{ post.category }} · {{ post.publish|jformat:"%Y/%m/%d" }}</span>
+                            </span>
+                        </a>
+                        {% empty %}
+                        <p style="color:var(--muted);padding:14px 0">هنوز مطلبی منتشر نشده است.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 
-<!-- Bootstrap JS -->
-<script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-
-<!-- Template Functions -->
-<script src="{% static 'js/functions.js' %}"></script>
+            
+        </div>
+    </div>
+</section>
 
 {% endblock %}
