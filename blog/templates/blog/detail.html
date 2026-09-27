@@ -6,6 +6,39 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block description %}{{ post.description|striptags|truncatechars:150 }}{% endblock %}
 
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.description|striptags|truncatechars:150 }}{% endblock %}
+{% block og_image %}{% with cover=post.images.first %}{% if cover %}{{ request.scheme }}://{{ request.get_host }}{{ cover.image_file.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/cover/cv1.png' %}{% endif %}{% endwith %}{% endblock %}
+
+{% block head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ post.title|escapejs }}",
+  "description": "{{ post.description|striptags|truncatechars:150|escapejs }}",
+  "datePublished": "{{ post.publish|iso }}",
+  "dateModified": "{{ post.updated|iso }}",
+  "articleSection": "{{ post.category|escapejs }}",
+  "mainEntityOfPage": "{{ request.scheme }}://{{ request.get_host }}{{ request.path }}",
+  {% with cover=post.images.first %}{% if cover %}"image": "{{ request.scheme }}://{{ request.get_host }}{{ cover.image_file.url }}",{% endif %}{% endwith %}
+  "author": {
+    "@type": "Person",
+    "name": "{{ post.author.get_full_name|default:post.author.username|escapejs }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "نئوتک",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/icon/favicon-192.png' %}"
+    }
+  }
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
 <!-- ========================================================= article -->
@@ -46,7 +79,7 @@
                     <b>فایل پیوست این مطلب</b>
                     <span>{{ post.attachment.name|cut:"post_files/" }}</span>
                 </span>
-                <a class="btn btn-primary" href="{{ post.attachment.url }}" download>دانلود فایل </a>
+                <a class="btn btn-primary" href="{{ post.attachment.url }}" download>دانلود فایل</a>
             </div>
             {% endif %}
 

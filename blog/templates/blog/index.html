@@ -68,31 +68,27 @@
 <!-- ================================================ popular + about -->
 <section class="tight">
     <div class="container">
-        <div class="grid grid-2" style="align-items:start">
-            <div class="panel">
-                <div class="panel-head">
-                    <h3>محبوب‌ترین‌ها</h3>
-                    <span class="tag neutral">بر اساس دیدگاه</span>
-                </div>
-                <div class="panel-body" style="padding-block:6px">
-                    <div class="rank-list">
-                        {% most_popular_posts 4 as popular_posts %}
-                        {% for post in popular_posts %}
-                        <a class="rank" href="{{ post.get_absolute_url }}">
-                            <b>{{ forloop.counter }}</b>
-                            <span>
-                                <span class="t">{{ post.title }}</span><br>
-                                <span class="m">{{ post.category }} · {{ post.publish|jformat:"%Y/%m/%d" }}</span>
-                            </span>
-                        </a>
-                        {% empty %}
-                        <p style="color:var(--muted);padding:14px 0">هنوز مطلبی منتشر نشده است.</p>
-                        {% endfor %}
-                    </div>
+        <div class="panel">
+            <div class="panel-head">
+                <h3>محبوب‌ترین‌ها</h3>
+                <span class="tag neutral">بر اساس دیدگاه</span>
+            </div>
+            <div class="panel-body" style="padding-block:6px">
+                <div class="rank-list">
+                    {% most_popular_posts 5 as popular_posts %}
+                    {% for post in popular_posts %}
+                    <a class="rank" href="{{ post.get_absolute_url }}">
+                        <b>{{ forloop.counter }}</b>
+                        <span>
+                            <span class="t">{{ post.title }}</span><br>
+                            <span class="m">{{ post.category }} · {{ post.publish|jformat:"%Y/%m/%d" }}</span>
+                        </span>
+                    </a>
+                    {% empty %}
+                    <p style="color:var(--muted);padding:14px 0">هنوز مطلبی منتشر نشده است.</p>
+                    {% endfor %}
                 </div>
             </div>
-
-            
         </div>
     </div>
 </section>

@@ -83,6 +83,16 @@ def current_jalali_year():
     return jdatetime.date.today().year
 
 
+@register.filter(name='iso')
+def to_iso(value):
+    """Jalali datetimes are not valid for search engines; emit Gregorian ISO."""
+    if not value:
+        return ''
+    if hasattr(value, 'togregorian'):
+        value = value.togregorian()
+    return value.isoformat()
+
+
 @register.filter(name='markdown')
 def to_markdown(text):
     # nl2br: a single Enter becomes a real line break

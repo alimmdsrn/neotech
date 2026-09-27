@@ -6,6 +6,22 @@
     <title>{% block title %}نئوتک{% endblock %} | نئوتک</title>
     <meta name="description" content="{% block description %}نئوتک، نشریه دانشجویی کامپیوتر و فناوری.{% endblock %}">
 
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#070b14" media="(prefers-color-scheme: dark)">
+
+    <!-- social preview (Telegram, WhatsApp, LinkedIn, X ...) -->
+    <meta property="og:site_name" content="نئوتک">
+    <meta property="og:locale" content="fa_IR">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}نئوتک — نشریه دانشجویی کامپیوتر و فناوری{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}نئوتک، نشریه دانشجویی کامپیوتر و فناوری.{% endblock %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/cover/cv1.png' %}{% endblock %}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="manifest" href="{% static 'manifest.json' %}">
     <link rel="icon" href="{% static 'images/icon/favicon.ico' %}" sizes="any">
     <link rel="icon" type="image/png" sizes="48x48" href="{% static 'images/icon/favicon-48.png' %}">
     <link rel="icon" type="image/png" sizes="96x96" href="{% static 'images/icon/favicon-96.png' %}">
@@ -29,6 +45,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "نئوتک",
+      "alternateName": "Neotech",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/icon/favicon-192.png' %}",
+      "sameAs": [
+        "https://t.me/realneotech",
+        "https://www.instagram.com/realneotech",
+        "https://www.aparat.com/realneotech",
+        "https://soundcloud.com/realneotech"
+      ]
+    }
+    </script>
+
     {% block head %}{% endblock %}
 </head>
 <body>

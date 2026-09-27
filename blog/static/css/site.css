@@ -327,6 +327,19 @@ tbody tr:hover{background:var(--surface-2);}
   .menu-btn{display:inline-flex;}
   .header-actions .hide-sm{display:none;}
   .stats{grid-template-columns:repeat(2,1fr);}
+  /* bigger, easier to hit icons on phones (44px is Apple's minimum) */
+  .header-actions{gap:10px;}
+  .icon-btn{width:44px;height:44px;border-radius:14px;}
+  .icon-btn svg{width:22px;height:22px;}
+  .brand img{width:40px;height:40px;}
+  .brand b{font-size:19px;}
+}
+@media (max-width:380px){
+  .container{padding-inline:16px;}
+  .header-actions{gap:8px;}
+  .icon-btn{width:42px;height:42px;}
+  .icon-btn svg{width:21px;height:21px;}
+  .brand b{font-size:17px;}
 }
 @media (max-width:640px){
   section{padding-block:40px;}
