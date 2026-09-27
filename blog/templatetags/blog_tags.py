@@ -49,26 +49,23 @@ def most_popular_posts(count=5):
 
 @register.simple_tag()
 def related_posts(post, count=3):
-    """Other published posts from the same category, newest first.
-
-    If the category has too few posts, the rest is filled with the newest
-    posts of the site so the section never looks half empty.
-    """
+    """Other published posts from the SAME category, newest first."""
     if post is None:
         return []
-
-    related = list(
+    return list(
         Post.published.filter(category=post.category)
         .exclude(pk=post.pk)
         .order_by('-publish')[:count]
     )
 
-    if len(related) < count:
-        seen = {p.pk for p in related} | {post.pk}
-        fillers = Post.published.exclude(pk__in=seen).order_by('-publish')[:count - len(related)]
-        related.extend(fillers)
 
-    return related
+@register.simple_tag()
+def suggested_posts(post=None, count=3):
+    """Newest published posts, used when the category has nothing else."""
+    qs = Post.published.order_by('-publish')
+    if post is not None:
+        qs = qs.exclude(pk=post.pk)
+    return list(qs[:count])
 
 
 @register.inclusion_tag("partials/latest-post.html")

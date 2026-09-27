@@ -151,17 +151,23 @@
 
 <!-- ========================================================= related -->
 {% related_posts post 3 as related %}
-{% if related %}
+{% suggested_posts post 3 as suggested %}
+{% if related or suggested %}
 <section>
     <div class="container">
         <div class="section-head">
             <div>
+                {% if related %}
                 <h2>مطالب مرتبط</h2>
                 <p>از همین دسته‌بندی</p>
+                {% else %}
+                <h2>پیشنهاد برای مطالعه</h2>
+                <p>تازه‌ترین مطالب نئوتک</p>
+                {% endif %}
             </div>
         </div>
         <div class="grid grid-3">
-            {% for post in related %}
+            {% for post in related|default:suggested %}
                 {% include 'partials/post-card.html' with post=post %}
             {% endfor %}
         </div>
